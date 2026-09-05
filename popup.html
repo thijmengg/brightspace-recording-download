@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1"
+    >
+
+    <title>Brightspace Downloader</title>
+
+    <link
+      rel="stylesheet"
+      href="popup.css"
+    >
+  </head>
+
+  <body>
+    <main class="popup">
+      <header class="header">
+        <div class="logo" aria-hidden="true">
+          ↓
+        </div>
+
+        <div>
+          <h1>Lecture downloader</h1>
+          <p>Save this recording as an MP4 file</p>
+        </div>
+      </header>
+
+      <section
+        id="selectionSection"
+        class="card"
+      >
+        <label for="recordingSelect">
+          Video quality
+        </label>
+
+        <div class="select-wrapper">
+          <select id="recordingSelect">
+            <option value="360p">
+              360p — smaller file
+            </option>
+
+            <option
+              value="720p"
+              selected
+            >
+              720p — recommended
+            </option>
+
+            <option value="1080p">
+              1080p — best quality
+            </option>
+          </select>
+        </div>
+
+        <p class="quality-hint">
+          Audio will automatically be added to the
+          downloaded video.
+        </p>
+      </section>
+
+      <section
+        id="progressSection"
+        class="card progress-section"
+        hidden
+      >
+        <div class="progress-heading">
+          <span id="statusText">
+            Preparing download…
+          </span>
+
+          <span id="progressText">
+            0%
+          </span>
+        </div>
+
+        <div
+          id="progressTrack"
+          class="progress-track"
+          role="progressbar"
+          aria-label="Lecture download progress"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <div
+            id="progressBar"
+            class="progress-bar"
+          ></div>
+        </div>
+
+        <p id="progressDetails" class="progress-details">
+          Reading the recording information
+        </p>
+      </section>
+
+      <p
+        id="errorMessage"
+        class="error-message"
+        hidden
+      ></p>
+
+      <div class="actions">
+        <button
+          id="Download"
+          class="primary-button"
+          type="button"
+        >
+          <span aria-hidden="true">↓</span>
+          Download lecture
+        </button>
+
+        <button
+          id="cancelDownload"
+          class="secondary-button"
+          type="button"
+        >
+          Close
+        </button>
+      </div>
+
+      <footer>
+        Brightspace Recording Downloader
+      </footer>
+    </main>
+
+    <script src="download.js"></script>
+  </body>
+</html>

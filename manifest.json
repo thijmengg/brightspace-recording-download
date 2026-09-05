@@ -3,6 +3,24 @@
   "name": "Brightspace Recording Downloader",
   "version": "0.1.0",
   "description": "Adds a download button to Brightspace lecture recordings.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions":[
+    "downloads",
+    "offscreen",
+    "storage"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  
   "content_scripts": [
     {
       "matches": [

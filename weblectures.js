@@ -52,7 +52,39 @@ if (recordingId) {
       video_1080
     );
 
-    
+    if (audio && (video_360 || video_720 || video_1080)) {
+      console.log(
+        "[Brightspace Downloader] Waitin for user input..."
+      );
+
+      const mediaData = {
+        recordingId: recordingId,
+
+        audioUrl: audio,
+
+        videoUrls: {
+          "360p": video_360 ?? null,
+          "720p": video_720 ?? null,
+          "1080p": video_1080 ?? null
+        }
+      };
+
+      chrome.runtime.sendMessage({
+        type: "MEDIA_URLS_FOUND",
+        media: mediaData
+      });
+      injectDownloadButton();
+      // chrome.runtime.sendMessage({ action: "open_popup" });
+
+    }
+    // const output = await ffmpeg.readFile("lecture.mp4");
+
+    // const blob = new Blob(
+    //   [output.buffer],
+    //   { type: "video/mp4" }
+    // )
+
+    // const consumer_download_link = URL.createObjectURL(blob);
   } ); 
 } else {
   console.log(
@@ -60,6 +92,38 @@ if (recordingId) {
   );
 }
 
+
+function injectDownloadButton() {
+  // Prevent duplicate buttons if script runs multiple times
+  if (document.getElementById("bs-download-btn")) return;
+
+  const btn = document.createElement("button");
+  btn.id = "bs-download-btn";
+  btn.innerText = "📥 Download Lecture";
+  
+  // Style it so it floats visibly in the iframe corner
+  btn.style.position = "fixed";
+  btn.style.top = "10px";
+  btn.style.right = "10px";
+  btn.style.zIndex = "99999";
+  btn.style.padding = "10px 15px";
+  btn.style.backgroundColor = "#0073e6";
+  btn.style.color = "white";
+  btn.style.border = "none";
+  btn.style.borderRadius = "4px";
+  btn.style.cursor = "pointer";
+  btn.style.fontWeight = "bold";
+
+  // NOW we have a valid User Gesture!
+  btn.addEventListener("click", () => {
+    chrome.runtime.sendMessage({
+      type: "OPEN_DOWNLOAD_POPUP"
+    });
+  });
+
+  document.body.appendChild(btn);
+
+}
 function getRecordingId() {
   const match = window.location.pathname.match(
     /^\/permalink\/([^/]+)\/iframe\/?$/i
