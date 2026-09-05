@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Brightspace Recording Downloader",
+  "version": "0.1.0",
+  "description": "Adds a download button to Brightspace lecture recordings.",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/d2l/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://weblectures.ru.nl/permalink/*/iframe/*"
+      ],
+      "js": [
+        "weblectures.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,2 +1,10 @@
-# brightspace-recording-download
-An extension that can be used to easily download lecture recordings from brightspace to mp4 format. 
+# Brightspace lecture recordings download extension
+
+
+
+# How to install?
+
+# How to contribute?
+As this may be used by all students from across the Netherlands, it's main focus is Computer Science Students.
+
+Since everyone from 
