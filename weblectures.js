@@ -20,7 +20,7 @@ if (recordingId) {
     link
   );
 
-  const data = httpGetAsync(link, function(response) {
+  const data = httpGetAsync(link, async function(response) {
     const jsonResponse = JSON.parse(response);
     const downloadUrl = jsonResponse?.data?.[0]?.url;
 
@@ -69,10 +69,28 @@ if (recordingId) {
         }
       };
 
-      chrome.runtime.sendMessage({
-        type: "MEDIA_URLS_FOUND",
-        media: mediaData
-      });
+      console.log(
+        "[Brightspace Downloader] Media data:",
+        mediaData
+      );
+      
+
+      const storeResponse =
+        await chrome.runtime.sendMessage({
+          type: "MEDIA_URLS_FOUND",
+          media: mediaData
+        });
+
+      if (!storeResponse?.success) {
+        console.error(
+          "[Brightspace Downloader] " +
+          "Could not store media:",
+          storeResponse?.error
+        );
+
+        return;
+      }
+
       injectDownloadButton();
       // chrome.runtime.sendMessage({ action: "open_popup" });
 
@@ -115,11 +133,26 @@ function injectDownloadButton() {
   btn.style.fontWeight = "bold";
 
   // NOW we have a valid User Gesture!
-  btn.addEventListener("click", () => {
-    chrome.runtime.sendMessage({
-      type: "OPEN_DOWNLOAD_POPUP"
-    });
-  });
+  btn.addEventListener("click", async () => {
+  try {
+    const response =
+      await chrome.runtime.sendMessage({
+        type: "OPEN_DOWNLOAD_POPUP"
+      });
+
+    if (!response?.success) {
+      throw new Error(
+        response?.error ||
+        "Could not open the popup"
+      );
+    }
+  } catch (error) {
+    console.error(
+      "[Brightspace Downloader]",
+      error
+    );
+  }
+});
 
   document.body.appendChild(btn);
 

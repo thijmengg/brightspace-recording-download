@@ -39,26 +39,26 @@
 
         <div class="select-wrapper">
           <select id="recordingSelect">
-            <option value="360p">
+            <option id="quality360" value="360p">
               360p — smaller file
             </option>
 
             <option
+              id="quality720"
               value="720p"
               selected
             >
               720p — recommended
             </option>
 
-            <option value="1080p">
+            <option id="quality1080" value="1080p">
               1080p — best quality
             </option>
           </select>
         </div>
 
         <p class="quality-hint">
-          Audio will automatically be added to the
-          downloaded video.
+          You may hide this popup or switch to another tab while the download is in progress. The download will continue in the background.
         </p>
       </section>
 
@@ -123,7 +123,7 @@
       </div>
 
       <footer>
-        Brightspace Recording Downloader
+        Made by <a target="_blank" href="https://thijmengraat.nl">Thijmen Graat</a>
       </footer>
     </main>
 
